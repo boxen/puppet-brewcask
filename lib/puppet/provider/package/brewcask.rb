@@ -85,13 +85,14 @@ Puppet::Type.type(:package).provide :brewcask,
 
   def command_opts
     @command_opts ||= {
-      :combine            => true,
-      :custom_environment => {
-        "HOME"            => "/Users/#{default_user}",
-        "PATH"            => "#{self.class.home}/bin:/usr/bin:/usr/sbin:/bin:/sbin"
+      :combine              => true,
+      :custom_environment   => {
+        "HOME"              => "/Users/#{default_user}",
+        "PATH"              => "#{self.class.home}/bin:/usr/bin:/usr/sbin:/bin:/sbin",
+        "HOMEBREW_NO_EMOJI" => "Yes",
       },
-      :failonfail         => true,
-      :uid                => default_user
+      :failonfail           => true,
+      :uid                  => default_user
     }
   end
 end
