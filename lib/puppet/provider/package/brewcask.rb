@@ -19,7 +19,7 @@ Puppet::Type.type(:package).provide :brewcask,
     if boxen_home = Facter.value(:boxen_home)
       "#{boxen_home}/homebrew"
     else
-      "/usr/local/homebrew"
+      "/usr/local"
     end
   end
 
