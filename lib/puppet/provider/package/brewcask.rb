@@ -84,7 +84,7 @@ Puppet::Type.type(:package).provide :brewcask,
   end
 
   def command_opts
-    @command_opts ||= {
+    opts = {
       :combine              => true,
       :custom_environment   => {
         "HOME"              => "/Users/#{default_user}",
@@ -92,7 +92,9 @@ Puppet::Type.type(:package).provide :brewcask,
         "HOMEBREW_NO_EMOJI" => "Yes",
       },
       :failonfail           => true,
-      :uid                  => default_user
     }
+    # Only try to run as another user if Puppet is run as root.
+    opts[:uid] = default_user if Process.uid == 0
+    opts
   end
 end
