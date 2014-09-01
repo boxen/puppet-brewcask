@@ -19,7 +19,7 @@ Puppet::Type.type(:package).provide :brewcask,
     if boxen_home = Facter.value(:boxen_home)
       "#{boxen_home}/homebrew"
     else
-      "/usr/local/homebrew"
+      "/usr/local"
     end
   end
 
@@ -84,14 +84,17 @@ Puppet::Type.type(:package).provide :brewcask,
   end
 
   def command_opts
-    @command_opts ||= {
-      :combine            => true,
-      :custom_environment => {
-        "HOME"            => "/Users/#{default_user}",
-        "PATH"            => "#{self.class.home}/bin:/usr/bin:/usr/sbin:/bin:/sbin"
+    opts = {
+      :combine              => true,
+      :custom_environment   => {
+        "HOME"              => "/Users/#{default_user}",
+        "PATH"              => "#{self.class.home}/bin:/usr/bin:/usr/sbin:/bin:/sbin",
+        "HOMEBREW_NO_EMOJI" => "Yes",
       },
-      :failonfail         => true,
-      :uid                => default_user
+      :failonfail           => true,
     }
+    # Only try to run as another user if Puppet is run as root.
+    opts[:uid] = default_user if Process.uid == 0
+    opts
   end
 end
