@@ -20,7 +20,8 @@ class brewcask {
   }
 
   package { 'brew-cask':
-    require => Homebrew::Tap['caskroom/cask']
+    require  => Homebrew::Tap['caskroom/cask'],
+    provider => homebrew
   }
 
   Package['brew-cask'] -> Package <| provider == brewcask |>
