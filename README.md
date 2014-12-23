@@ -1,11 +1,7 @@
-puppet-brewcask
-===============
+Homebrew Cask Puppet Module for Boxen
+=====================================
 
-A module which installs homebrew-cask, and a brewcask provider for Puppet's package type.
-
-## Requirements
-
-Currently assumes a boxen-based environment, and requires puppet-homebrew.
+A module which installs [homebrew-cask](https://github.com/caskroom/homebrew-cask), and `brewcask` provider for Puppet's `package` type.
 
 ## Usage
 
@@ -16,6 +12,10 @@ include brewcask # taps homebrew-cask / installs brew-cask
 package { 'adium': provider => 'brewcask' }
 package { 'firefox': provider => 'brewcask' }
 ```
+
+## Required Puppet Modules
+
+ - `homebrew`
 
 ## Work in progress
 
