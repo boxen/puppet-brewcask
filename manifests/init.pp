@@ -3,7 +3,7 @@ class brewcask {
 
   # caskroom is hardcoded to '/opt/homebrew-cask/Caskroom'
   # https://github.com/caskroom/homebrew-cask/blob/master/lib/cask/locations.rb#L11
-  $cask_home = "/opt/homebrew-cask"
+  $cask_home = '/opt/homebrew-cask'
   $cask_room = "${cask_home}/Caskroom"
 
   homebrew::tap { 'caskroom/cask': }
