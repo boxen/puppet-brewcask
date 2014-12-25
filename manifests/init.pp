@@ -1,3 +1,9 @@
+# Public: Install and configure brewcask for use with Boxen.
+#
+# Examples
+#
+#   include brewcask
+
 class brewcask {
   require homebrew
 
