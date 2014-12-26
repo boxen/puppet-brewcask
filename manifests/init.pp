@@ -7,9 +7,7 @@
 class brewcask {
   require homebrew
 
-  # caskroom is hardcoded to '/opt/homebrew-cask/Caskroom'
-  # https://github.com/caskroom/homebrew-cask/blob/master/lib/cask/locations.rb#L11
-  $cask_home = '/opt/homebrew-cask'
+  $cask_home = $::brewcask_root
   $cask_room = "${cask_home}/Caskroom"
 
   homebrew::tap { 'caskroom/cask': }
@@ -28,6 +26,11 @@ class brewcask {
   package { 'brew-cask':
     require  => Homebrew::Tap['caskroom/cask'],
     provider => homebrew
+  }
+
+  boxen::env_script { 'brewcask':
+    content  => template('brewcask/env.sh.erb'),
+    priority => highest,
   }
 
   Package['brew-cask'] -> Package <| provider == brewcask |>
