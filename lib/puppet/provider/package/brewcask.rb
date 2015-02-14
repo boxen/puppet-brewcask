@@ -5,7 +5,7 @@ Puppet::Type.type(:package).provide :brewcask,
   :parent => Puppet::Provider::Package do
   include Puppet::Util::Execution
 
-  confine  :operatingsystem => :darwin
+  confine :operatingsystem => :darwin
 
   has_feature :versionable
   has_feature :install_options
@@ -16,15 +16,11 @@ Puppet::Type.type(:package).provide :brewcask,
   end
 
   def self.home
-    if boxen_home = Facter.value(:boxen_home)
-      "#{boxen_home}/homebrew"
-    else
-      "/usr/local"
-    end
+    Facter.value(:homebrew_root)
   end
 
   def self.caskroom
-    "/opt/homebrew-cask/Caskroom/"
+    "#{Facter[:brewcask_root].value}/Caskroom"
   end
 
   def self.current(name)
@@ -85,13 +81,14 @@ Puppet::Type.type(:package).provide :brewcask,
 
   def command_opts
     opts = {
-      :combine              => true,
-      :custom_environment   => {
-        "HOME"              => "/Users/#{default_user}",
-        "PATH"              => "#{self.class.home}/bin:/usr/bin:/usr/sbin:/bin:/sbin",
-        "HOMEBREW_NO_EMOJI" => "Yes",
+      :combine               => true,
+      :custom_environment    => {
+        "HOME"               => "/Users/#{default_user}",
+        "PATH"               => "#{self.class.home}/bin:/usr/bin:/usr/sbin:/bin:/sbin",
+        "HOMEBREW_CASK_OPTS" => "--caskroom=#{self.class.caskroom}",
+        "HOMEBREW_NO_EMOJI"  => "Yes",
       },
-      :failonfail           => true,
+      :failonfail            => true,
     }
     # Only try to run as another user if Puppet is run as root.
     opts[:uid] = default_user if Process.uid == 0
