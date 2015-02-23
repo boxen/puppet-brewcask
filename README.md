@@ -13,6 +13,11 @@ package { 'adium': provider => 'brewcask' }
 package { 'firefox': provider => 'brewcask' }
 ```
 
+## Custom facts
+
+ - `brewcask_root` (only overridable from `$BOXEN_REPO_DIR/facts.d/`)
+   - default is `/opt/homebrew-cask`
+
 ## Required Puppet Modules
 
  - `homebrew`, >= 1.10.0
