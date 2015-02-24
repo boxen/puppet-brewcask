@@ -4,7 +4,7 @@ describe 'brewcask' do
   let(:facts) { default_test_facts }
 
   it do
-    should include_class('homebrew')
+    should contain_class('homebrew')
 
     should contain_homebrew__tap('caskroom/cask')
 
