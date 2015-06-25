@@ -1,4 +1,4 @@
-Homebrew Cask Puppet Module for Boxen
+Homebrew Cask Puppet Module for Boxen [![Build Status](https://travis-ci.org/boxen/puppet-brewcask.svg)](https://travis-ci.org/boxen/puppet-brewcask)
 =====================================
 
 A module which installs [homebrew-cask](https://github.com/caskroom/homebrew-cask), and `brewcask` provider for Puppet's `package` type.
