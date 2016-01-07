@@ -14,10 +14,6 @@ describe 'brewcask' do
   end
 
   it do
-    should contain_package('brew-cask').with_provider('homebrew')
-  end
-
-  it do
     should contain_boxen__env_script('brewcask').with_ensure('present')
   end
 end
