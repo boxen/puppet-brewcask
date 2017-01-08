@@ -16,7 +16,7 @@ package { 'firefox': provider => 'brewcask' }
 ## Custom facts
 
  - `brewcask_root` (only overridable from `$BOXEN_REPO_DIR/facts.d/`)
-   - default is `/opt/homebrew-cask`
+   - default is `/usr/local`
 
 ## Required Puppet Modules
 
