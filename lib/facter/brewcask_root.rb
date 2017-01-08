@@ -4,5 +4,5 @@ Facter.add(:brewcask_root) do
   # Explicit, low weight makes this easily overridable
   has_weight 1
 
-  setcode { '/opt/homebrew-cask' }
+  setcode { '/usr/local' }
 end
