@@ -1,8 +1,7 @@
 require "puppet/provider/package"
 require "puppet/util/execution"
 
-Puppet::Type.type(:package).provide :brewcask,
-  :parent => Puppet::Provider::Package do
+Puppet::Type.type(:package).provide :brewcask, :parent => Puppet::Provider::Package do
   include Puppet::Util::Execution
 
   confine :operatingsystem => :darwin
