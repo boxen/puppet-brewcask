@@ -36,7 +36,7 @@ Puppet::Type.type(:package).provide :brewcask, :parent => Puppet::Provider::Pack
   end
 
   def self.new_caskroom
-    @new_caskroom ||= Pathname.new("#{self.class.home}/Caskroom")
+    @new_caskroom ||= Pathname.new("#{home}/Caskroom")
   end
 
   def query
