@@ -20,9 +20,9 @@ Puppet::Type.type(:package).provide :brewcask, :parent => Puppet::Provider::Pack
 
   def self.caskroom
     if legacy_caskroom.exist?
-      legacy_caskroom
+      legacy_caskroom.to_s
     else
-      new_caskroom
+      new_caskroom.to_s
     end
   end
 
