@@ -1,8 +1,7 @@
 require "puppet/provider/package"
 require "puppet/util/execution"
 
-Puppet::Type.type(:package).provide :brewcask,
-  :parent => Puppet::Provider::Package do
+Puppet::Type.type(:package).provide :brewcask, :parent => Puppet::Provider::Package do
   include Puppet::Util::Execution
 
   confine :operatingsystem => :darwin
@@ -20,12 +19,24 @@ Puppet::Type.type(:package).provide :brewcask,
   end
 
   def self.caskroom
-    "#{Facter[:brewcask_root].value}/Caskroom"
+    if legacy_caskroom.exist?
+      legacy_caskroom.to_s
+    else
+      new_caskroom.to_s
+    end
   end
 
   def self.current(name)
     caskdir = Pathname.new "#{caskroom}/#{name}"
     caskdir.directory? && caskdir.children.size >= 1 && caskdir.children.sort.last.to_s
+  end
+
+  def self.legacy_caskroom
+    @legacy_caskroom ||= Pathname.new('/opt/homebrew-cask/Caskroom')
+  end
+
+  def self.new_caskroom
+    @new_caskroom ||= Pathname.new("#{home}/Caskroom")
   end
 
   def query
@@ -85,7 +96,6 @@ Puppet::Type.type(:package).provide :brewcask,
       :custom_environment    => {
         "HOME"               => "/Users/#{default_user}",
         "PATH"               => "#{self.class.home}/bin:/usr/bin:/usr/sbin:/bin:/sbin",
-        "HOMEBREW_CASK_OPTS" => "--caskroom=#{self.class.caskroom}",
         "HOMEBREW_NO_EMOJI"  => "Yes",
       },
       :failonfail            => true,
