@@ -45,20 +45,19 @@ Puppet::Type.type(:package).provide :brewcask, :parent => Puppet::Provider::Pack
   end
 
   def install
-    run "install", resource[:name], *install_options
+    if install_options.any?
+      execute ["brew", "install", "Caskroom/cask/#{resource[:name]}", *install_options].flatten, command_opts
+    else
+      execute ["brew", "boxen-install", "Caskroom/cask/#{resource[:name]}"], command_opts
+    end
   end
 
   def uninstall
-    run "uninstall", resource[:name]
+    execute "brew", "uninstall", "--force", resource[:name]
   end
 
   def install_options
     Array(resource[:install_options]).flatten.compact
-  end
-
-  def run(*cmds)
-    brew_cmd = ["brew", "cask"] + cmds
-    execute brew_cmd, command_opts
   end
 
   private
