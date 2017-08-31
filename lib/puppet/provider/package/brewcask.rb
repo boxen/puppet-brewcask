@@ -53,7 +53,7 @@ Puppet::Type.type(:package).provide :brewcask, :parent => Puppet::Provider::Pack
   end
 
   def uninstall
-    execute "brew", "uninstall", "--force", resource[:name]
+    execute ["brew", "cask", "uninstall", "--force", resource[:name]]
   end
 
   def install_options
